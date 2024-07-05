@@ -1,6 +1,4 @@
-# Athena/GlueによるサーバーレスETLデータパイプライン構築
-
-
+# Athena/GlueによるサーバーレスETLパイプライン構築
 
 <p align="center">
   <img src="sources/aws.png" alt="animated" width="400">
@@ -16,9 +14,9 @@
 このプロジェクトは、Amazon S3に保存されたCSVデータに対して、サーバーレスなETL（抽出、変換、ロード）処理を行うデータパイプラインを構築する方法について説明します。
 
 # アーキテクチャ
-+ データソース（S3）: CSV形式の生データはAmazon S3バケットに保存されます。
-+ データカタログ（Glue Data Catalog）: Glueクローラーを使用してS3バケット内のデータスキーマを自動的に検出し、Glue Data Catalogにメタデータテーブルとして登録します。
-+ クエリエンジン（Athena）: Athenaは、Glue Data Catalogに登録されたテーブルに対して標準SQLクエリを実行します。これにより、データの抽出と変換が可能になります
++ S3: CSV形式の生データはAmazon S3バケットに保存されます。
++ Glue Data Catalog: Glueクローラーを使用してS3バケット内のデータスキーマを自動的に検出し、Glue Data Catalogにメタデータテーブルとして登録します。
++ Athena: Athenaは、Glue Data Catalogに登録されたテーブルに対してSQLクエリを実行します。これにより、データの抽出と変換が可能になります。
 
 # 利点
 + サーバーレス: サーバーのプロビジョニングや管理が不要になり、運用コストとオーバーヘッドが削減されます。
@@ -32,6 +30,14 @@
 bin/terraform_apply
 ```
 
+2. AthenaでSQLを実行する手順
+
+  1. AWS マネジメントコンソールからAthenaにアクセスします。
+  2. 左側のメニューから「クエリエディタ」を選択します。
+  3. 「ワークグループ」ドロップダウンメニューから「main」を選択します。
+  4. 「実行」ボタンをクリックしてクエリを実行します。
+
+
 # 停止方法
 以下のコードを実行すると実行されます。
 ```
@@ -40,8 +46,23 @@ bin/terraform_destroy
 
 # 結果
 
+s3に以下のCSVが保存されています。
+
+<p>
+  <img src="sources/source.png" alt="animated"  width="400">
+</p>
+
+athenaで以下のsqlを実行します。
+
+```
+SELECT name, COUNT(*) AS visit_count
+FROM main_table
+GROUP BY name
+ORDER BY visit_count DESC;
+```
+
 s3に以下のCSVが作成されました。
 
-<!-- <p align="center">
-  <img src="sources/csv.png" alt="animated">
-</p> -->
+<p>
+  <img src="sources/result.png" alt="animated"  width="400">
+</p>
