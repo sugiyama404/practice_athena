@@ -9,4 +9,6 @@ resource "aws_athena_workgroup" "main" {
       output_location = "s3://${var.s3_bucket_id}/${var.result_dir_name}/"
     }
   }
+
+  force_destroy = true
 }

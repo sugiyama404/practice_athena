@@ -19,11 +19,11 @@ module "s3" {
   source_dir_name = var.source_dir_name
 }
 
-module "iam" {
-  source           = "./modules/iam"
-  app_name         = var.app_name
-  s3_bucket_bucket = module.s3.s3_bucket_bucket
-}
+# module "iam" {
+#   source           = "./modules/iam"
+#   app_name         = var.app_name
+#   s3_bucket_bucket = module.s3.s3_bucket_bucket
+# }
 
 module "glue" {
   source           = "./modules/glue"

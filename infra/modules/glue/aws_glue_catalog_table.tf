@@ -27,13 +27,21 @@ resource "aws_glue_catalog_table" "main" {
     location      = "s3://${var.s3_bucket_bucket}/${var.source_dir_name}"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
+    compressed    = false
 
     ser_de_info {
       name                  = "main"
-      serialization_library = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
+      serialization_library = "org.apache.hadoop.hive.serde2.OpenCSVSerde"
       parameters = {
         "field.delim" = ","
+        "quoteChar"   = "\""
+        "escapeChar"  = "\\"
       }
     }
+  }
+  table_type = "EXTERNAL_TABLE"
+  parameters = {
+    "classification"         = "csv"
+    "skip.header.line.count" = "1"
   }
 }
