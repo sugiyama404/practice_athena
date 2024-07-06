@@ -65,3 +65,11 @@ s3に以下のCSVが作成されました。
 <p>
   <img src="sources/result.png" alt="animated"  width="400">
 </p>
+
+
+# Qiita記事
+
+技術詳細はQiitaに記載しています。
+
+
+[Athena/GlueによるサーバーレスETLパイプライン構築](https://qiita.com/sugiyama404/items/5b057755be6e1cee5e53)

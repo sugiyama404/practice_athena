@@ -1,4 +1,3 @@
-# Create a Glue Data Catalog Table for the CSV files
 resource "aws_glue_catalog_table" "main" {
   name          = "main_table"
   database_name = aws_glue_catalog_database.main.name
